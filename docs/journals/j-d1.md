@@ -9,7 +9,7 @@
 
 |Orario        |Lavoro svolto                 |
 |--------------|------------------------------|
-|14:00 -       |Analisi delle specifiche      |
+|14:00 - xx:xx |Analisi delle specifiche      |
 
 
 ##  Problemi riscontrati e soluzioni adottate
