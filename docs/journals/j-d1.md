@@ -22,5 +22,5 @@ Pianificazione ancora da svolgere.
 
 ## Programma di massima per la prossima giornata di lavoro
 
-.1 Schemi
-.1 Informarsi su multithreading per Node.js
+* Schemi
+* Informarsi su multithreading per Node.js
