@@ -1,0 +1,19 @@
+- setup
+    - npx create-electron-app netscanner --template=typescript-webpack
+    - cd netscanner
+    - npm run start
+    - npm i react react-dom @types/react @types/react-dom
+    - index.html -> root div
+    - + App.tsx -> func component
+    - tsconfig.json -> + "jsx": "react"
+    - renderer.js -> .tsx -> render root div
+
+- hot reload
+    - npm i react-hot-loader
+    - App.tsx -> export default hot(module)(App);
+    - + .babelrc -> + { "plugins": ["react-hot-loader/babel"] }
+
+- Ping
+    - npm i ping
+    - npm i @types/ping
+    - import ping
