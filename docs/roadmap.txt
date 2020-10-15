@@ -17,3 +17,6 @@
     - npm i ping
     - npm i @types/ping
     - import ping
+
+12:40 finito IP
+15:00 finito Pinger
