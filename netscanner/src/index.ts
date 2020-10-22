@@ -12,7 +12,8 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
-    title: 'NetScanner'
+    title: 'Net Scanner',
+    autoHideMenuBar: true
   });
 
   // and load the index.html of the app.
