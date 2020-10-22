@@ -6,7 +6,7 @@ export interface Machine {
 
   ip: IP;
 
-  hostname: string;
+  hostname?: string;
 
   openPorts?: Array<number> | undefined;
 }

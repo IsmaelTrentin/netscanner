@@ -20,3 +20,8 @@
 
 12:40 finito IP
 15:00 finito Pinger
+
+-- 22/10
+10:25 - 10:50 -> Iniziato PortScanner
+10:50 - 11:00 -> Constants
+11:00         -> Finito PortScanner
