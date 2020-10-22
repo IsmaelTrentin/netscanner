@@ -1,5 +1,4 @@
 import { app, BrowserWindow } from 'electron';
-import { IP } from './models/IP';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -12,7 +11,11 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
+<<<<<<< HEAD
     title: 'Net Scanner',
+=======
+    title: 'NetScanner',
+>>>>>>> cb57a8a67f2cb49b79ea6990654ce2cdd6c1a742
     autoHideMenuBar: true
   });
 
@@ -47,7 +50,3 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-
-let ip: IP = new IP('100.100.255.0');
-ip.addT(1, 2);
-console.log(ip.toString());
