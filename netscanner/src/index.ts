@@ -11,11 +11,7 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
-<<<<<<< HEAD
     title: 'Net Scanner',
-=======
-    title: 'NetScanner',
->>>>>>> cb57a8a67f2cb49b79ea6990654ce2cdd6c1a742
     autoHideMenuBar: true
   });
 
