@@ -12,11 +12,12 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 const createWindow = (): void => {
-  return;
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
+    center: true,
+    useContentSize: true,
     title: 'Net Scanner',
     autoHideMenuBar: true
   });
@@ -52,7 +53,7 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
-let ip: IP = new IP('10.20.4.1');
+/*let ip: IP = new IP('10.20.4.1');
 let ports: Array<number> = [80, 3000, 8888];
 
 let s: number = 8;
@@ -64,7 +65,7 @@ setInterval(() => {
     console.log(`Seconds to go: ${s}`);
   }
 }, 1000);
-/*setTimeout(async () => {
+setTimeout(async () => {
   let t1: number = (new Date()).getTime();
   for (let i: number = 0; i < 256; i++) {
     let machine: Machine = await Pinger.ping(ip, { tries: 1, timeout: 1 });
