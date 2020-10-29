@@ -25,3 +25,7 @@
 10:25 - 10:50 -> Iniziato PortScanner
 10:50 - 11:00 -> Constants
 11:00         -> Finito PortScanner
+
+
+--29/10
+tutto il giorno gui
