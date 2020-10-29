@@ -14,6 +14,7 @@
       "*": ["node_modules/*"]
     },
     "jsx": "react",
+    "downlevelIteration": true,
     "typeRoots": [ "./src/@types", "./node_modules/@types"]
   },
   "include": [

@@ -1,4 +1,9 @@
 import { app, BrowserWindow } from 'electron';
+import { Machine } from './interfaces/Machine';
+import { ScanResult } from './interfaces/ScanResult';
+import { IP } from './models/IP';
+import { Pinger } from './models/Pinger';
+import { PortScanner } from './models/PortScanner';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -7,6 +12,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 const createWindow = (): void => {
+  return;
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
@@ -46,3 +52,39 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+let ip: IP = new IP('10.20.4.1');
+let ports: Array<number> = [80, 3000, 8888];
+
+let s: number = 8;
+setInterval(() => {
+  if (s == 0) {
+    clearInterval(0);
+  } else {
+    s--;
+    console.log(`Seconds to go: ${s}`);
+  }
+}, 1000);
+/*setTimeout(async () => {
+  let t1: number = (new Date()).getTime();
+  for (let i: number = 0; i < 256; i++) {
+    let machine: Machine = await Pinger.ping(ip, { tries: 1, timeout: 1 });
+    if (machine.online) {
+      for (let port of ports) {
+        let open: boolean = await PortScanner.isOpen(port, ip, { tries: 1, timeout: 5 });
+        if (open) {
+          if (machine.openPorts) {
+            machine.openPorts.push(port);
+          } else {
+            machine.openPorts = [port];
+          }
+        }
+      }
+    }
+    console.log(`Host ${machine.hostname}[${ip.toString()}] is: ${(machine.online) ? 'ONLINE': 'OFFLINE'}`);
+    if (machine.openPorts) {
+      console.log(`\tOpen ports: ${machine.openPorts.toString()}`);
+    }
+    ip.addT(0, 1);
+  }
+  console.log(`Total time: ${((new Date()).getTime() - t1) / 1000} seconds`);
+}, s * 1000);*/

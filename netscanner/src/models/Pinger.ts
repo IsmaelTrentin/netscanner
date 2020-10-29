@@ -8,7 +8,7 @@ export class Pinger {
   public static async ping(host: IP, options?: NetOptions): Promise<Machine> {
     return new Promise<Machine>((resolve, reject) => {
       ping.promise.probe(host.toString(), {
-        timeout: options.timeout
+        timeout: options.timeout / 1000.0
       }).then((r: ping.PingResponse) => {
         let machine: Machine = {
           online: r.alive,

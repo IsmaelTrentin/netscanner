@@ -7,5 +7,5 @@ declare module 'is-port-reachable' {
     timeout?: number
   }
 
-  export function isPortReachable(port: number, options?: IPROptions): Promise<boolean>;
+  export default function (port: number, options?: IPROptions): Promise<boolean>;
 }
