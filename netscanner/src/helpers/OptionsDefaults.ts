@@ -1,5 +1,5 @@
-import { ReportOptions } from './../interfaces/ReportOptions';
-import { NetOptions } from './../interfaces/NetOptions';
+import { ReportOptions } from '../interfaces/IReportOptions';
+import { NetOptions } from '../interfaces/INetOptions';
 import * as Constants from './Constants';
 
 export class OptionsDefaults {
