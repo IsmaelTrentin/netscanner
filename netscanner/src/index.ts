@@ -1,9 +1,5 @@
 import { app, BrowserWindow } from 'electron';
-import { Machine } from './interfaces/Machine';
-import { ScanResult } from './interfaces/ScanResult';
-import { IP } from './models/IP';
-import { Pinger } from './models/Pinger';
-import { PortScanner } from './models/PortScanner';
+import { Parser } from './models/Parser';
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -14,8 +10,10 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 600,
+    height: 400,
     width: 800,
+    minWidth: 700,
+    minHeight: 300,
     center: true,
     useContentSize: true,
     title: 'Net Scanner',
@@ -26,7 +24,7 @@ const createWindow = (): void => {
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  //mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -50,6 +48,16 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+
+let s: string = '\\[1 - 2],\\   8 , \\[1-9]';
+try {
+  console.log(Parser.parse(s));
+} catch (err) {
+  console.error(err);
+}
+
+
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
