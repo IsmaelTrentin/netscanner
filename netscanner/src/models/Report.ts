@@ -1,8 +1,8 @@
-import { ScanResult } from './../interfaces/ScanResult';
+import { IScanResult } from '../interfaces/IScanResult';
 
 export class Report {
 
-  fields: Array<ScanResult>;
+  fields: Array<IScanResult>;
 
   private onlineMachines: number;
 
@@ -12,9 +12,9 @@ export class Report {
 
   private mostOpenPorts: Map<number, number>;
 
-  constructor(fields: Array<ScanResult>) {
+  constructor(fields: Array<IScanResult>) {
     this.fields = fields;
-    this.fields.forEach((sr: ScanResult) => {
+    this.fields.forEach((sr: IScanResult) => {
       if (sr.machine.online) {
         this.onlineMachines++;
       }
@@ -28,7 +28,7 @@ export class Report {
 
   private calcMostOpenPorts(): Map<number, number> {
     let output: Map<number, number> = new Map();
-    this.fields.forEach((sr: ScanResult) => {
+    this.fields.forEach((sr: IScanResult) => {
       if (sr.machine.online) {
         sr.machine.openPorts.forEach((p: number) => {
           if (!output.has(p)) {
