@@ -29,3 +29,15 @@
 
 --29/10
 tutto il giorno gui
+
+--12/11
+inizio 10:55 VM schifo
+
+--fino 14:40
+gui
+
+--14:40 - 14:47
+Range.ts
+
+--14:47
+Parser
