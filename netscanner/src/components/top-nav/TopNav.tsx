@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 
 class TopNav extends React.Component {
@@ -9,13 +10,15 @@ class TopNav extends React.Component {
           <p className="title">Net Scanner</p>
         </div>
         <div className="dropdown">
-            <img src="" alt="X" className="dropbtn" />
-            <div className="dropdown-content">
-              <a href="#">Link 1</a>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
-            </div>
+          <img src="" alt="X" className="dropbtn" />
+          <div className="dropdown-content">
+            <Link to="/">Scan</Link>
+            <Link to="/report">Last Report</Link>
+            <a href="#">Compact Report</a>
+            <a href="#">Results</a>
+            <a href="#">About</a>
           </div>
+        </div>
       </div>
     );
   }
