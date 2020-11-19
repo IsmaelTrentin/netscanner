@@ -41,3 +41,12 @@ Range.ts
 
 --14:47
 Parser
+
+
+
+#- 19.11
+--9:00 - 15:20
+GUI
+
+------ gui
+=> binding
