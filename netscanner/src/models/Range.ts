@@ -1,10 +1,23 @@
+/**
+ * Simple range class.
+ * 
+ * @author Ismael Trentin
+ * @version 2020.11.12
+ */
 export class Range {
 
-  public static create(min: number, max: number): Array<number> {
+  /**
+   * Returns an array representing the range starting from
+   * `min` and ending at `max`.
+   * 
+   * @param min the range start
+   * @param max the range end
+   */
+  public static from(min: number, max: number): Array<number> {
     if (min < max) {
       let array: Array<number> = [];
       for (let i = min; i <= max; i++) {
-        array.push(min + 1);
+        array.push(i);
       }
       return array;
     } else {
