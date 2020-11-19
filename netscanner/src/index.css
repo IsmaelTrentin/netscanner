@@ -12,6 +12,9 @@
   --form-color: #141435;
   --gray: #dadada;
   --light-gray: #e7e7e7;
+  --dark-gray: #2b2b3154;
+  --red: #ff1629;
+  --red-alpha: #ff162956;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
@@ -30,6 +33,10 @@ html {
 
 p {
   color: var(--gray);
+}
+
+.hidden {
+  display: none;
 }
 
 .top-nav {
@@ -102,27 +109,22 @@ p {
   width: 70%;
   max-width: 700px;
   min-height: 150px;
-  padding: 4px 8px;
+  padding: 16px 16px 8px;
   border: none;
   border-radius: 7px;
   box-shadow: 0px 5px 11px 1px rgba(0, 0, 0, 0.6);
   background-color: var(--form-color);
+  overflow: hidden;
   animation: form-in 320ms ease-in-out;
 }
 
 .form-field {
   width: 100%;
-}
-
-.form-field-range {
-  width: 100%;
+  float: left;
+  margin-bottom: 10px;
 }
 
 .form-field * {
-  float: left;
-}
-
-.form-field-range * {
   float: left;
 }
 
@@ -132,18 +134,91 @@ p {
 }
 
 .field-input {
-  margin-right: 20px;
+  margin-left: 10px;
+  float: right;
   border: none;
   border-bottom: 1px solid #50fbde70;
   background-color: var(--bg-color);
   padding: 5px;
   color: var(--gray);
   outline: none;
-  animation: field-input-out 220ms forwards ease-in-out;
+  overflow: hidden;
+  /*animation: field-input-active-out 220ms forwards ease-in-out;*/
+}
+
+.field-input-spanned {
+  width: 326px;
+  margin-left: 10px;
+  float: right;
+  border: none;
+  border-bottom: 1px solid #50fbde70;
+  background-color: var(--bg-color);
+  padding: 5px;
+  color: var(--gray);
+  outline: none;
+  overflow: hidden;
+  /*animation: field-input-active-out 220ms forwards ease-in-out;*/
 }
 
 .field-input:focus {
-  animation: field-input-in 220ms forwards ease-in-out;
+  /*animation: field-input-active-in 220ms forwards ease-in-out;*/
+}
+
+.field-input:hover {
+  animation: field-input-hover-in 220ms forwards ease-in-out;
+}
+
+.field-input-spanned:hover {
+  animation: field-input-hover-in 220ms forwards ease-in-out;
+}
+
+.scan-btn {
+  position: relative;
+  border: none;
+  background: none;
+  font-size: 30px;
+  font-weight: lighter;
+  margin-left: -4px;
+  color: var(--light-color);
+}
+
+.scan-btn-wrapper {
+  bottom: 30px;
+  margin: auto;
+  width: 150px;
+  height: 150px;
+  border: 1px solid var(--light-color);
+  border-radius: 50%;
+  padding: 50px 0;
+  background: none;
+  text-align: center;
+  cursor: pointer;
+  animation: scan-btn-hover-out 150ms forwards ease-in-out;
+}
+
+.scan-btn-wrapper:hover {
+  animation: scan-btn-hover-in 150ms forwards ease-in-out;
+}
+
+.scan-btn-wrapper:hover p {
+  animation: scan-btn-title-hover-in 150ms forwards ease-in-out;
+}
+
+.bottom-fix {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+}
+
+.form-error {
+  color: var(--red);
+  width: 60%;
+  margin: auto;
+  margin-top: 15px;
+  padding-bottom: 5px;
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid var(--red-alpha);
 }
 
 @keyframes descriptor-in {
@@ -175,24 +250,57 @@ p {
   }
 }
 
-@keyframes field-input-in {
+@keyframes field-input-active-in {
   0% {
     border-top: 1px solid #50fbde00;
     border-bottom: 1px solid #50fbde70;
   }
   100% {
-    border-bottom: 1px solid #50fbde00;
+    border-bottom: 1px solid #50fbde70;
     border-top: 1px solid #50fbde70;
   }
 }
 
-@keyframes field-input-out {
+@keyframes field-input-active-out {
   0% {
     border-top: 1px solid #50fbde70;
-    border-bottom: 1px solid #50fbde00;
+    border-bottom: 1px solid #50fbde70;
   }
   100% {
     border-top: 1px solid #50fbde00;
     border-bottom: 1px solid #50fbde70;
+  }
+}
+
+@keyframes field-input-hover-in {
+  100% {
+    background-color: var(--dark-gray);
+  }
+}
+
+@keyframes scan-btn-hover-in {
+  100% {
+    background: linear-gradient(
+      132deg,
+      rgba(80, 251, 223, 1) 0%,
+      rgb(133, 255, 235) 100%
+    );
+    box-shadow: 0px 0px 60px -22px var(--light-color-alpha);
+    transform: scale(1.08, 1.08);
+  }
+}
+
+@keyframes scan-btn-hover-out {
+  0% {
+    transform: scale(1.08, 1.08);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes scan-btn-title-hover-in {
+  100% {
+    color: var(--light-gray);
   }
 }
