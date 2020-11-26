@@ -7,6 +7,7 @@ import Form from '../form/Form';
 import ScanButton from '../scan-btn/ScanButton';
 import TopNav from '../top-nav/TopNav';
 import { IP } from './../../models/IP';
+import ExpandButton from '../expand-btn/ExpandButton';
 
 const fields: Array<IField> = [
   {
@@ -20,7 +21,7 @@ const fields: Array<IField> = [
     type: FieldType.SIMPLE,
     inputType: 'text',
     placeholder: 'IPs (split with , )',
-    span: true
+    span: "span"
   },
   {
     name: 'Ports range:',
@@ -33,16 +34,30 @@ const fields: Array<IField> = [
     type: FieldType.SIMPLE,
     inputType: 'text',
     placeholder: 'Ports (split with , )',
-    span: true
+    span: "span"
   }
 ];
 
-class ScanPage extends React.Component<{}, { displayErr: boolean, errors: string }> {
+let expField: IField = {
+  name: 'Expression',
+  inputType: "text",
+  span: "big",
+  type: FieldType.SIMPLE
+}
+
+export interface ScanPageState {
+  displayErr: boolean;
+  displayExp: boolean;
+  errors: string;
+}
+
+class ScanPage extends React.Component<{}, ScanPageState> {
 
   constructor() {
     super({});
     this.state = {
       displayErr: false,
+      displayExp: false,
       errors: ''
     };
   }
@@ -57,6 +72,16 @@ class ScanPage extends React.Component<{}, { displayErr: boolean, errors: string
       }
       index++;
     }
+  }
+
+  onExpBtnClick = () => {
+    let newState: ScanPageState = this.state;
+    newState.displayExp = !newState.displayExp;
+    this.setState(newState, () => { console.log(this.state) });
+  }
+
+  onExpFieldChange = (field: IField) => {
+    console.log(field);
   }
 
   onScanStart = () => {
@@ -89,6 +114,9 @@ class ScanPage extends React.Component<{}, { displayErr: boolean, errors: string
 
   render() {
     let cln: string = (this.state.displayErr) ? 'form-error' : 'hidden';
+    let expForm = (this.state.displayExp)
+      ? <Form fields={[expField]} onChangeField={this.onExpFieldChange} />
+      : '';
     return (
       <div className="app-content">
         <TopNav />
@@ -97,6 +125,10 @@ class ScanPage extends React.Component<{}, { displayErr: boolean, errors: string
           fields={fields}
           onChangeField={this.onFieldChange}
         />
+        <ExpandButton
+          onClick={() => { this.onExpBtnClick() }}
+        />
+        {expForm}
         <p className={cln}>{this.state.errors.toString().replace('[', '').replace(']', '')}</p>
         <div className="bottom-fix">
           <ScanButton onClick={this.onScanStart} />
