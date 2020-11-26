@@ -43,7 +43,10 @@ class FormField extends React.Component<{ field: IField, onChange: Function }> {
 
   render() {
     if (this.props.field.type !== FieldType.RANGE) {
-      let classname: string = (this.props.field.span) ? 'field-input-spanned' : 'field-input';
+      let classname: string = (this.props.field.span == "span")
+        ? 'field-input-spanned' :
+        (this.props.field.span == "big")
+        ? 'field-input-spanned-big' : 'field-input';
       return (
         <div className="form-field">
           <p className="field-name">{this.props.field.name}</p>
