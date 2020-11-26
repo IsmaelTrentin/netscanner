@@ -10,7 +10,7 @@ export interface IField {
   
   placeholder?: string;
 
-  span?: boolean;
+  span?: "none" | "span" | "big";
 
   value?: string | { start: number | undefined, end: number | undefined };
 }
