@@ -1,10 +1,19 @@
 import React, { ChangeEvent } from "react";
 import { hot } from "react-hot-loader";
 import { FieldType } from "../../enums/FieldType";
-import { IField } from "./../../interfaces/IField";
+import { FieldRangeValue, IField } from "./../../interfaces/IField";
 
-class FormField extends React.Component<{ field: IField, onChange: Function }> {
-  constructor(props: { field: IField, onChange: Function }) {
+export interface FormFieldProps {
+
+  field: IField<FieldType>;
+
+  tabIndex: number;
+
+  onChange: Function;
+}
+
+class FormField extends React.Component<FormFieldProps> {
+  constructor(props: FormFieldProps) {
     super(props);
     this.state = {
       value: undefined
@@ -19,17 +28,15 @@ class FormField extends React.Component<{ field: IField, onChange: Function }> {
     }
   }
 
-  private updateSimpleValue(e: ChangeEvent<HTMLInputElement>, field: IField): void {
+  private updateSimpleValue(e: ChangeEvent<HTMLInputElement>, field: IField<FieldType>): void {
     let oldState: any = Object.assign({}, this.state);
     oldState.value = e.target.value
     this.setState(oldState, () => {
-      console.log('State: ');
-      console.log(this.state)
       this.props.onChange(field, this.state);
     });
   }
 
-  private updateRangeValue(e: ChangeEvent<HTMLInputElement>, field: IField, index: number): void {
+  private updateRangeValue(e: ChangeEvent<HTMLInputElement>, field: IField<FieldType>, index: number): void {
     let oldState: any = Object.assign({}, this.state);
     if (index === 0) {
       oldState.value.start = e.target.value
@@ -42,15 +49,17 @@ class FormField extends React.Component<{ field: IField, onChange: Function }> {
   }
 
   render() {
-    if (this.props.field.type !== FieldType.RANGE) {
-      let classname: string = (this.props.field.span == "span")
-        ? 'field-input-spanned' :
-        (this.props.field.span == "big")
+    let classname: string = (this.props.field.span == "span")
+      ? 'field-input-spanned' :
+      (this.props.field.span == "big")
         ? 'field-input-spanned-big' : 'field-input';
+    classname += (this.props.field.optional) ? ' field-input-optional' : ' field-input-mandatory';
+    if (this.props.field.type !== FieldType.RANGE) {
       return (
         <div className="form-field">
           <p className="field-name">{this.props.field.name}</p>
           <input
+            tabIndex={this.props.tabIndex}
             type={this.props.field.inputType || 'text'}
             min="0"
             className={classname}
@@ -64,16 +73,18 @@ class FormField extends React.Component<{ field: IField, onChange: Function }> {
         <div className="form-field">
           <p className="field-name">{this.props.field.name}</p>
           <input
+            tabIndex={this.props.tabIndex + 1}
             type={this.props.field.inputType || 'text'}
             min="0"
-            className="field-input"
+            className={classname}
             placeholder={this.props.field.placeholder + ' end'}
             onChange={(e) => this.updateRangeValue(e, this.props.field, 1)}
           />
           <input
+            tabIndex={this.props.tabIndex}
             type={this.props.field.inputType || 'text'}
             min="0"
-            className="field-input"
+            className={classname}
             placeholder={this.props.field.placeholder + ' start'}
             onChange={(e) => this.updateRangeValue(e, this.props.field, 0)}
           />
