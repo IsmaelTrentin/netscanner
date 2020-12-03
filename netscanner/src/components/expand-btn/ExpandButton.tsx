@@ -2,7 +2,8 @@ import * as React from 'react';
 import { hot } from 'react-hot-loader';
 
 export interface ExpandButtonProps {
-  onClick: Function
+  onClick: Function;
+  text: string;
 }
 
 class ExpandButton extends React.Component<ExpandButtonProps>{
@@ -20,7 +21,7 @@ class ExpandButton extends React.Component<ExpandButtonProps>{
       <div
         className="expand-btn"
         onClick={this.onClick} >
-        <p className="expand-btn-text">+</p>
+        <p className="expand-btn-text">{this.props.text}</p>
       </div>
     );
   }
