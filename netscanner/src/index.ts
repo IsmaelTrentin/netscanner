@@ -10,14 +10,17 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 const createWindow = (): void => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 656,
+    height: 730,
     width: 800,
     minWidth: 750,
-    minHeight: 656,
+    minHeight: 730,
     center: true,
     useContentSize: true,
     title: 'Net Scanner',
-    autoHideMenuBar: true
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
 
   // and load the index.html of the app.
