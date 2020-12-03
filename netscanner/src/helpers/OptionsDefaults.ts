@@ -1,10 +1,10 @@
-import { ReportOptions } from '../interfaces/IReportOptions';
-import { NetOptions } from '../interfaces/INetOptions';
+import { IReportOptions } from '../interfaces/IReportOptions';
+import { INetOptions } from '../interfaces/INetOptions';
 import * as Constants from './Constants';
 
 export class OptionsDefaults {
 
-  public static netOptionsDefaults(): NetOptions {
+  public static netOptionsDefaults(): INetOptions {
     return {
       timeout: Constants.DEFAULT_TIMEOUT,
       tries: Constants.DEFAULT_TRIES,
@@ -13,7 +13,7 @@ export class OptionsDefaults {
     };
   }
 
-  public static reportOptionsDefaults(): ReportOptions {
+  public static reportOptionsDefaults(): IReportOptions {
     return {
       hostnames: Constants.DEFAULT_SHOW_HOSTNAMES,
       hideOffline: Constants.DEFAULT_HIDE_OFFLINE,
