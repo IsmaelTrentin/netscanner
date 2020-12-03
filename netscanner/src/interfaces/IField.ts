@@ -1,16 +1,20 @@
 import { FieldType } from '../enums/FieldType';
 
-export interface IField {
+export type FieldRangeValue = { start: string | undefined, end: string | undefined };
+
+export interface IField<T extends FieldType> {
 
   name: string;
-  
-  type?: FieldType;
-  
+
+  optional?: boolean;
+
+  type?: T;
+
   inputType?: 'text' | 'number';
-  
+
   placeholder?: string;
 
   span?: "none" | "span" | "big";
 
-  value?: string | { start: number | undefined, end: number | undefined };
+  value?: T extends FieldType.RANGE ? FieldRangeValue : string | undefined;
 }
