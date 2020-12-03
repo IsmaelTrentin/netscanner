@@ -41,9 +41,8 @@ export class Parser {
   }
 
   private static isValid(expression: string): boolean {
-    if (expression.trim() !== '') {
+    if (expression.trim() != '') {
       expression = expression.replace(/\s/g, '')
-      if (expression.includes(SPLIT_CHAR)) {
         let splitted: Array<string> = Parser.cleanSplit(expression);
         for (let i: number = 0; i < splitted.length; i++) {
           let s: string = splitted[i];
@@ -52,7 +51,6 @@ export class Parser {
           }
         }
         return true;
-      }
     }
     return false;
   }
