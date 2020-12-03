@@ -24,4 +24,8 @@ export class Range {
       throw 'min cannot be greater than max';
     }
   }
+
+  public static removeFrom(range: Array<number>, numbers: Array<number>): Array<number> {
+    return range.filter((v: number) => !numbers.includes(v));
+  }
 }
