@@ -50,3 +50,6 @@ GUI
 
 ------ gui
 => binding
+
+03.12
+GUI + binding
