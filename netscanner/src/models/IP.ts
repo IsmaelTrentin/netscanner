@@ -7,6 +7,16 @@ export class IP {
     return pattern.test(ip);
   }
 
+  public static countAddresses(ip1: IP, ip2: IP): number {
+    let ip: IP = new IP(ip1.toString());
+    let addresses: number = 0;
+    while (!ip.isSame(ip2)) {
+      addresses++;
+      ip.addT(0, 1);
+    }
+    return addresses;
+  }
+
   constructor(ip: string) {
     if (IP.isValid(ip)) {
       this.triplets = ip.split('.')
@@ -43,6 +53,10 @@ export class IP {
     } else {
       throw 'Invalid index';
     }
+  }
+
+  public isSame(ip: IP): boolean {
+    return this.toString() == ip.toString();
   }
 
   public toString(): string {
