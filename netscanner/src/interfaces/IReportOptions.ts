@@ -1,12 +1,14 @@
 export interface IReportOptions {
 
+  fileName?: string;
+
+  filePath?: string;
+
   hideOffline?: boolean;
 
   totalTime?: boolean;
 
   pingTime?: boolean;
-
-  portScanTime?: boolean;
 
   hostnames?: boolean;
 
