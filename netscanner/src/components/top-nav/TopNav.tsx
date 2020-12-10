@@ -13,8 +13,8 @@ class TopNav extends React.Component {
           <img src="" alt="X" className="dropbtn" />
           <div className="dropdown-content">
             <Link to="/">Scan</Link>
-            <Link to="/report">Export Report</Link>
-            <a href="#">About</a>
+            <Link to="/scan">Report</Link>
+            <Link to="/about">About</Link>
           </div>
         </div>
       </div>
