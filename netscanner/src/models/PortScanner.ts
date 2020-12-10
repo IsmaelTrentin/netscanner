@@ -12,6 +12,7 @@ export class PortScanner {
       ipr(port, { host: host, timeout: tout})
         .then((reached: boolean) => {
           resolve(reached);
+          return;
         })
         .catch((e: any) => reject(e));
     });
