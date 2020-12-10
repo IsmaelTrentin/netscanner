@@ -6,7 +6,7 @@ export interface IMachine {
 
   ip: IP;
 
-  hostname?: string;
+  openPorts: Array<number>;
 
-  openPorts?: Array<number> | undefined;
+  hostname?: string;
 }
