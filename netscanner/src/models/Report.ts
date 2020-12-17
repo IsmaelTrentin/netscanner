@@ -1,22 +1,50 @@
-import fs from 'fs'; // fs-extra gives problem with webpack
+import fs from 'fs';
 import path from 'path';
+
 import { ArrayHelper } from './../helpers/ArrayHelper';
 import DateHelper from './../helpers/DateHelper';
 import { IReportOptions } from './../interfaces/IReportOptions';
 import { IScanResult } from './../interfaces/IScanResult';
 
+/**
+ * Report model.
+ * 
+ * @author Ismael Trentin
+ * @version 2020.12.10
+ */
 export class Report {
 
+  /**
+   * The report fields.
+   */
   readonly fields: Array<IScanResult>;
 
+  /**
+   * The report options.
+   */
   readonly options: IReportOptions;
 
+  /**
+   * The number of online machines.
+   */
   private onlineMachines: number;
 
+  /**
+   * The average ping time for each ping.
+   */
   private averagePingTime: number;
 
+  /**
+   * The most common open ports.
+   */
   private mostOpenPorts: Map<number, number>;
 
+  /**
+   * Instatiates a new Report.
+   * 
+   * @param fields the report fields
+   * @param options the report options
+   */
   constructor(fields: Array<IScanResult>, options: IReportOptions) {
     this.fields = fields;
     this.options = options;
@@ -35,6 +63,10 @@ export class Report {
     this.mostOpenPorts = this.calcMostOpenPorts();
   }
 
+  /**
+   * Returns a map with the count of occurences for each
+   * opened port.
+   */
   private calcMostOpenPorts(): Map<number, number> {
     let output: Map<number, number> = new Map();
     this.fields.forEach((sr: IScanResult) => {
@@ -59,6 +91,11 @@ export class Report {
     return output;
   }
 
+  /**
+   * Converts the report into a csv format.
+   * 
+   * @returns the report in a csv file.
+   */
   private toCSV(): string {
     let headers: string[] = ['IP', 'State', 'Open ports:'];
     let data: string[][] = [[]];
@@ -93,18 +130,36 @@ export class Report {
     return strData;
   }
 
+  /**
+   * Returns the number of online machines.
+   * 
+   * @returns the number of online machines
+   */
   public getOnlineMachines(): number {
     return this.onlineMachines;
   }
 
+  /**
+   * Returns the average ping time.
+   * 
+   * @returns the average ping time.
+   */
   public getAveragePingTime(): number {
     return this.averagePingTime;
   }
 
+  /** 
+   * Returns the most common opened ports.
+   * 
+   * @returns a map with the most common opened ports.
+   */
   public getMostOpenPorts(): Map<number, number> {
     return this.mostOpenPorts;
   }
 
+  /** 
+   * Writes the file to the default file path. 
+   */
   public async write(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       this.options.fileName = DateHelper.createFileName('csv');

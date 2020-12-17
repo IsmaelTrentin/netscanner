@@ -12,6 +12,8 @@ export class Range {
    * 
    * @param min the range start
    * @param max the range end
+   * @returns an array representing the range starting from
+   * `min` and ending at `max`.
    */
   public static from(min: number, max: number): Array<number> {
     if (min < max) {
@@ -25,6 +27,13 @@ export class Range {
     }
   }
 
+  /**
+   * Removes `numbers` from `range`.
+   * 
+   * @param range a numeric range
+   * @param numbers the numbers to be removed
+   * @returns the altered array.
+   */
   public static removeFrom(range: Array<number>, numbers: Array<number>): Array<number> {
     return range.filter((v: number) => !numbers.includes(v));
   }

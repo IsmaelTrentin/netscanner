@@ -2,6 +2,7 @@ import { INetOptions } from '../interfaces/INetOptions';
 import ipr from 'is-port-reachable';
 import { IP } from './IP';
 import { DEFAULT_TIMEOUT } from './../helpers/Constants';
+import { Pinger } from './Pinger';
 
 export class PortScanner {
 
