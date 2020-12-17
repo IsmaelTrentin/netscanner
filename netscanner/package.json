@@ -1,8 +1,8 @@
 {
   "name": "netscanner",
   "productName": "netscanner",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "0.1.0",
+  "description": "Scan ips and ports on a network.",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -71,6 +71,9 @@
     "@electron-forge/plugin-webpack": "^6.0.0-beta.53",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "@types/ping": "^0.2.0",
+    "@types/react": "^16.9.51",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-router-dom": "^5.1.6",
     "@typescript-eslint/eslint-plugin": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",
     "css-loader": "^4.3.0",
@@ -84,9 +87,6 @@
     "typescript": "^4.0.3"
   },
   "dependencies": {
-    "@types/react": "^16.9.51",
-    "@types/react-dom": "^16.9.8",
-    "@types/react-router-dom": "^5.1.6",
     "electron-squirrel-startup": "^1.0.0",
     "is-port-reachable": "^3.0.0",
     "ping": "^0.3.0",
