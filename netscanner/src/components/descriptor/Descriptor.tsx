@@ -1,8 +1,34 @@
 import * as React from 'react';
 import { hot } from 'react-hot-loader';
 
+/**
+ * The Descriptor component's props.
+ * 
+ * @author Ismael Trentin
+ * @version 2020.10.29
+ */
+interface IDescriptor {
+
+  /**
+   * The display text.
+   */
+  text: string
+}
+
+/**
+ * The descriptor component. It provides a brief 
+ * description to the current page.
+ * 
+ * @author Ismael Trentin
+ * @version 2020.10.29
+ */
 class Descriptor extends React.Component<IDescriptor> {
 
+  /**
+   * Instantiates a new Descriptor component.
+   * 
+   * @param props the component's props
+   */
   constructor(props: IDescriptor) {
     super(props);
   }
@@ -14,10 +40,6 @@ class Descriptor extends React.Component<IDescriptor> {
       </div>
     );
   }
-}
-
-interface IDescriptor {
-  text: string
 }
 
 export default hot(module)(Descriptor);
