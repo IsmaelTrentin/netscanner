@@ -241,7 +241,7 @@ img {
 }
 
 .field-input-spanned {
-  width: 326px;
+  width: 326px; /* Gives problems if res is not 1920x1080 */
   margin-left: 10px;
   float: right;
   background-color: var(--bg-color);
