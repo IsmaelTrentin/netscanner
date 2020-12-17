@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { hot } from 'react-hot-loader';
 import { Link, RouteComponentProps, useLocation } from 'react-router-dom';
+
 import Descriptor from '../descriptor/Descriptor';
 import TopNav from '../top-nav/TopNav';
 import { SortOption } from './../../enums/SortOption';
@@ -14,7 +15,12 @@ import { Pinger } from './../../models/Pinger';
 import { PortScanner } from './../../models/PortScanner';
 import { Report } from './../../models/Report';
 
-
+/**
+ * The ScanProgresPage component's state.
+ * 
+ * @author Ismael Trentin
+ * @version 2020.12.10
+ */
 interface IScanProgessPageState {
   subnetsStart: IP;
   subnetsEnd: IP;
@@ -24,6 +30,12 @@ interface IScanProgessPageState {
   hasStartedScan: boolean;
 }
 
+/**
+ * The ScanProgresPage component's props.
+ * 
+ * @author Ismael Trentin
+ * @version 2020.12.10
+ */
 interface IScanProgessPageProps extends RouteComponentProps<{}, {}, IScanProgessPageState> {
   subnetsStart: IP;
   subnetsEnd: IP;
@@ -33,6 +45,11 @@ interface IScanProgessPageProps extends RouteComponentProps<{}, {}, IScanProgess
   hasStartedScan: boolean;
 }
 
+/**
+ * The scan progress page or report page function component.
+ * 
+ * @param props the component's props
+ */
 const ScanProgessPage: React.FC<IScanProgessPageProps> = (props: IScanProgessPageProps) => {
 
   const location = useLocation<IScanProgessPageProps>();
@@ -51,6 +68,13 @@ const ScanProgessPage: React.FC<IScanProgessPageProps> = (props: IScanProgessPag
 
   const [sortOption, setSortOption] = useState<SortOption>(SortOption.BY_IP)
 
+  /**
+   * Returns the scan results sorted by their IP
+   * in an ascending order.
+   * 
+   * @returns the scan results sorted by their IP
+   * in an ascending order.
+   */
   function sortByIP(): IScanResult[] {
     let newScans: IScanResult[] = scans;
     newScans.sort((a: IScanResult, b: IScanResult) => {
@@ -61,6 +85,14 @@ const ScanProgessPage: React.FC<IScanProgessPageProps> = (props: IScanProgessPag
     return newScans;
   }
 
+  /**
+   * Returns the scan results sorted by their state
+   * in a first-onlines-then-offlines order. IP sorting
+   * is still applied for results of the same state.
+   * 
+   * @returns the scan results sorted by their state
+   * in a first-onlines-then-offlines order.
+   */
   function sortByState(): IScanResult[] {
     sortByIP();
     let newMachines: IScanResult[] = scans;
@@ -70,6 +102,11 @@ const ScanProgessPage: React.FC<IScanProgessPageProps> = (props: IScanProgessPag
     return newMachines;
   }
 
+  /**
+   * Sorts the scan results based on the `sortOption`.
+   * 
+   * @param sortOption the sort option
+   */
   function sort(sortOption: SortOption) {
     let sorted: IScanResult[] = [];
     if (sortOption == SortOption.BY_IP) {
@@ -81,11 +118,13 @@ const ScanProgessPage: React.FC<IScanProgessPageProps> = (props: IScanProgessPag
     setScans(sorted);
   }
 
+  /**
+   * Executes a scan.
+   */
   async function scan() {
     let ip: IP = new IP(state.subnetsStart.toString());
     let ipEnd: IP = new IP(state.subnetsEnd.toString());
     ipEnd.addT(0, 1);
-    //let runningPings: Promise<IMachine>[] = [];
     while (!ip.isSame(ipEnd)) {
       setStateMsg(`Sent ping to ${ip.toString()}`);
       Pinger.ping(ip, state.netOpts)
@@ -110,19 +149,13 @@ const ScanProgessPage: React.FC<IScanProgessPageProps> = (props: IScanProgessPag
           setScans(newScans);
           sortByIP();
           if (scanRes.machine.ip.isSame(state.subnetsEnd)) {
-            console.log('a');
             let report: Report = new Report(scans, state.reportOpts);
-            report.write().then(() => console.log('wrote report'))
+            report.write().then(() => setStateMsg(`Wrote report to: ${report.options.filePath}`))
               .catch((err) => console.error(err));
           }
         });
       ip.addT(0, 1);
     }
-    //setStateMsg('Awaiting responses...');
-    // let results: IMachine[] = await Promise.all(runningPings);
-    // setMachines(results);
-    // sort(SortOption.BY_IP);
-    // setStateMsg('Finished');
   };
 
   const queueRescan = () => {
