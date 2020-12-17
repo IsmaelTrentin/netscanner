@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { hot } from 'react-hot-loader';
 import { Redirect } from 'react-router-dom';
+
 import Descriptor from '../descriptor/Descriptor';
 import ExpandButton from '../expand-btn/ExpandButton';
 import Form from '../form/Form';
@@ -152,25 +153,102 @@ const NET_OPTIONS_FIELDS: Array<IField<FieldType>> = [
   }
 ];
 
+/**
+ * The ScanPage state.
+ * 
+ * @author Ismael Trentin
+ * @version 2020.12.10
+ */
 export interface IScanPageState {
+
+  /**
+   * The form fields.
+   */
   fields: Array<IField<FieldType>>;
+
+  /**
+   * The network options form fields.
+   */
   netOptsFields: Array<IField<FieldType>>;
+
+  /**
+   * The report options form fields.
+   */
   reportOptsFields: Array<IField<FieldType>>;
+
+  /**
+   * The port expression form field.
+   */
   expField: IField<FieldType>;
+
+  /**
+   * Defines when to display the last error occured.
+   */
   displayErr: boolean;
+
+  /**
+   * Defines if the port expression form has to be displayed.
+   */
   displayExp: boolean;
+
+  /**
+   * Defines if the network options form has to be displayed.
+   */
   displayNetOptions: boolean;
+
+  /**
+   * Defines if the report options form has to be displayed.
+   */
   displayReportOptions: boolean;
+
+  /**
+   * The last error message.
+   */
   errors: string;
+
+  /**
+   * The start ip address from where to build the IPs range.
+   */
   subnetsStart: IP | undefined;
+
+  /**
+   * The end ip from where to build the IPs range.
+   */
   subnetsEnd: IP | undefined;
+
+  /**
+   * The ports that will be scanned.
+   */
   ports: Array<number> | undefined;
+
+  /**
+   * The expression cache. Does not work.
+   */
   expCache: string;
+
+  /**
+   * The network options.
+   */
   netOptions: INetOptions;
+
+  /**
+   * The report options.
+   */
   reportOptions: IReportOptions;
+
+  /**
+   * Defines if the user has pressed the scan button 
+   * to start a scan.
+   */
   startedScan: boolean;
 }
 
+/**
+ * The main page of the software.
+ * 
+ * @author Ismael Trentin
+ * @version 2020.12.10
+ */
 class ScanPage extends React.Component<{}, IScanPageState> {
 
   constructor(props: {}) {
@@ -195,6 +273,12 @@ class ScanPage extends React.Component<{}, IScanPageState> {
     };
   }
 
+  /**
+   * Updates the field `field` that is `fields`.
+   * 
+   * @param field the field that needs to be updated
+   * @param fields the fields from wich to update the field.
+   */
   private updateField(field: IField<FieldType>, fields: Array<IField<FieldType>>): void {
     let index: number = FieldsHelper.indexOfByName(fields, field);
     if (index > -1) {
@@ -205,6 +289,9 @@ class ScanPage extends React.Component<{}, IScanPageState> {
     throw 'Unexisting field';
   }
 
+  /**
+   * Returns true when the mandatory fields are filled in.
+   */
   private areFieldsFilledIn(): boolean {
     let value1: FieldRangeValue = this.state.fields[0].value as FieldRangeValue;
     let value2: string | FieldRangeValue = this.state.fields[1].value;
@@ -216,21 +303,45 @@ class ScanPage extends React.Component<{}, IScanPageState> {
     }
   }
 
+  /**
+   * Called when a main form's field changes.
+   * 
+   * @param field the field that changed
+   * @param value the new value
+   */
   onFieldChange = (field: IField<FieldType>, value: string | FieldRangeValue) => {
     field.value = value;
     this.updateField(field, this.state.fields);
   }
 
+  /**
+   * Called when a network options form's field changes.
+   * 
+   * @param field the field that changed
+   * @param value the new value
+   */
   onNetFieldChange = (field: IField<FieldType>, value: string) => {
     field.value = value;
     this.updateField(field, this.state.netOptsFields);
   }
 
+  /**
+   * Called when a report form's field changes.
+   * 
+   * @param field the field that changed
+   * @param value the new value
+   */
   onReportFieldChange = (field: IField<FieldType>, value: string) => {
     field.value = value;
     this.updateField(field, this.state.reportOptsFields);
   }
 
+  /**
+   * Called when the expression field changes.
+   * 
+   * @param field the port expression field
+   * @param value the new value
+   */
   onExpFieldChange = (field: IField<FieldType>, value: string) => {
     try {
       let ports: Array<number> = Parser.parse(value);
@@ -257,18 +368,36 @@ class ScanPage extends React.Component<{}, IScanPageState> {
     }
   }
 
+  /**
+   * Called when the network options form's expand button
+   * is clicked.
+   */
   onNetOptionsBtnClick = () => {
     this.setState({ displayNetOptions: !this.state.displayNetOptions });
   }
 
+  /**
+   * Called when the report options form's expand button
+   * is clicked.
+   */
   onReportExpBtnClick = () => {
     this.setState({ displayReportOptions: !this.state.displayReportOptions });
   }
 
+  /**
+   * Called when the port expression's expand button is clicked.
+   */
   onExpBtnClick = () => {
     this.setState({ displayExp: !this.state.displayExp });
   }
 
+  /**
+   * Returns the array of IPs to be scanned or `undefined` 
+   * if fields are empty or invalid.
+   * 
+   * @returns the array of IPs to be scanned or `undefined` 
+   * if fields are empty or invalid.
+   */
   private getIPs(): IP[] | undefined {
     // Validate IPs
     let subsRange: FieldRangeValue = this.state.fields[0].value as FieldRangeValue;
@@ -294,6 +423,13 @@ class ScanPage extends React.Component<{}, IScanPageState> {
     return (singleIP) ? [singleIP] : [subnetsStart, subnetsEnd];
   }
 
+  /**
+   * Returns the array of ports to be scanned or `undefined` 
+   * if fields are empty or invalid.
+   * 
+   * @returns the array of ports to be scanned or `undefined` 
+   * if fields are empty or invalid.
+   */
   private getPorts(): number[] | undefined {
     // Validate ports
     let portsRange: FieldRangeValue = this.state.fields[3].value as FieldRangeValue;
@@ -319,6 +455,12 @@ class ScanPage extends React.Component<{}, IScanPageState> {
 
   /**
    * Returns the new netOpts object by setting
+   * only the values changed by the user. This will
+   * work with new fields only if they are rendered 
+   * in the same order as of the properties of the
+   * `INetOptions` interface.
+   * 
+   * @returns the new netOpts object by setting
    * only the values changed by the user. This will
    * work with new fields only if they are rendered 
    * in the same order as of the properties of the
@@ -352,6 +494,9 @@ class ScanPage extends React.Component<{}, IScanPageState> {
     return;
   }
 
+  /**
+   * Called when the scan button is pressed.
+   */
   onScanStart = () => {
     console.log(this.state);
     this.setState({
@@ -377,31 +522,13 @@ class ScanPage extends React.Component<{}, IScanPageState> {
     // Get net options
     let netOpts: INetOptions = this.getNetOpts();
     // Get report options
-
+    // no time omg
 
     this.setState({
       subnetsStart: ips[0],
       subnetsEnd: (ips.length == 2) ? ips[1] : ips[0],
       ports: validPorts
     });
-    // , async () => {
-    //   let ip: IP = new IP(this.state.subnetsStart.toString());
-    //   let results: IMachine[] = [];
-    //   while (ip.triplets != this.state.subnetsEnd.triplets) {
-    //     this.setState({
-    //       displayErr: true,
-    //       errors: `Scanning ${ip.toString()}...`
-    //     })
-    //     results.push(await Pinger.ping(this.state.subnetsStart, { timeout: 1 }));
-    //     ip.addT(0, 1);
-    //   }
-    //   let a: Promise<IMachine[]> = Promise.all(results);
-    //   a.then((arr) => {
-    //     for (let b of arr) {
-    //       console.log(b);
-    //     }
-    //   });
-    // }
     this.setState({
       startedScan: true
     });
@@ -423,17 +550,6 @@ class ScanPage extends React.Component<{}, IScanPageState> {
             }
           }}
         />
-        // <div className="app-content">
-        //   <TopNav />
-        //   <ScanProgessPage
-        //     hasStartedScan={this.state.startedScan}
-        //     subnetsStart={this.state.subnetsStart}
-        //     subnetsEnd={this.state.subnetsEnd}
-        //     ports={this.state.ports}
-        //     netOpts={this.state.netOptions}
-        //     reportOpts={this.state.reportOptions}
-        //   />
-        // </div>
       );
     }
     let cln: string = (this.state.displayErr) ? 'form-error' : 'hidden';
