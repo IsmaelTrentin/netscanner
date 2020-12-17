@@ -1,19 +1,47 @@
-import React, { ChangeEvent } from "react";
-import { hot } from "react-hot-loader";
-import { FieldType } from "../../enums/FieldType";
-import { FieldRangeValue, IField } from "./../../interfaces/IField";
+import React, { ChangeEvent } from 'react';
+import { hot } from 'react-hot-loader';
 
-export interface FormFieldProps {
+import { FieldType } from '../../enums/FieldType';
+import { IField } from './../../interfaces/IField';
 
+/**
+ * The FormField component's props.
+ * 
+ * @author Ismael Trentin
+ * @version 2020.12.03
+ */
+export interface IFormFieldProps {
+
+  /**
+   * The field object.
+   */
   field: IField<FieldType>;
 
+  /**
+   * The tab index number, relative to the form.
+   */
   tabIndex: number;
 
+  /**
+   * Called when the field changes.
+   */
   onChange: Function;
 }
 
-class FormField extends React.Component<FormFieldProps> {
-  constructor(props: FormFieldProps) {
+/**
+ * A field component. Is used the Form component.
+ * 
+ * @author Ismael Trentin
+ * @version 2020.12.03
+ */
+class FormField extends React.Component<IFormFieldProps> {
+
+  /**
+   * Instantiates a new FormField component.
+   * 
+   * @param props the component's props
+   */
+  constructor(props: IFormFieldProps) {
     super(props);
     this.state = {
       value: undefined
@@ -28,6 +56,12 @@ class FormField extends React.Component<FormFieldProps> {
     }
   }
 
+  /**
+   * Updates a `SIMPLE` field's value. 
+   * 
+   * @param e the event data
+   * @param field the field that changed
+   */
   private updateSimpleValue(e: ChangeEvent<HTMLInputElement>, field: IField<FieldType>): void {
     let oldState: any = Object.assign({}, this.state);
     oldState.value = e.target.value
@@ -36,6 +70,13 @@ class FormField extends React.Component<FormFieldProps> {
     });
   }
 
+  /**
+   * Updates a `RANGE` field's value.
+   * 
+   * @param e the event data
+   * @param field the field that changed
+   * @param index the index of the actual field in the range, either start or end
+   */
   private updateRangeValue(e: ChangeEvent<HTMLInputElement>, field: IField<FieldType>, index: number): void {
     let oldState: any = Object.assign({}, this.state);
     if (index === 0) {
